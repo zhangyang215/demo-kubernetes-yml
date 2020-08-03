@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: demo-service-config
+  name: demo-service-config 
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-service-config
+  template:
+    metadata:
+      name: demo-service-config
+      labels:
+        app: demo-service-config
+    spec:
+      containers:
+      - name: demo-service-config 
+        image: 172.31.87.111:5000/demo-service-config
+        imagePullPolicy: Always
+        # args: ["--spring.profiles.active=native"]
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: demo-service-config
+  name: demo-service-config
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 9000 
+    targetPort: 9000
+    nodePort: 31000
+  selector:
+    app: demo-service-config
