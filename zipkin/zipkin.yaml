@@ -16,7 +16,6 @@ spec:
       labels:
         app: zipkin
     spec:
-      nodeName: node3
       containers:
       - name: zipkin
         image: openzipkin/zipkin
@@ -29,9 +28,9 @@ spec:
           - name: MYSQL_DB
             value: "zipkin"
           - name: MYSQL_USER
-            value: "root"
+            value: "zipkin"
           - name: MYSQL_PASS 
-            value: "1234"
+            value: "zipkin1234"
           - name: RABBIT_ADDRESSES
             value: "rabbitmq-0.rabbitmq:5672"
           - name: RABBIT_USER
