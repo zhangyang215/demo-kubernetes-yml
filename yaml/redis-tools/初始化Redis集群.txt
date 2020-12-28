@@ -1,0 +1,25 @@
+1.install redis-trib
+kubectl run redis-tools --image=172.31.87.111:5000/redis-tools -it --restart=Never
+
+2.create master cluster
+redis-trib.py create \
+  `dig +short redis-cluster-0.redis-cluster.default.svc.cluster.local`:6379 \
+  `dig +short redis-cluster-1.redis-cluster.default.svc.cluster.local`:6379 \
+  `dig +short redis-cluster-2.redis-cluster.default.svc.cluster.local`:6379
+
+3.add slave for each of master
+redis-trib.py replicate \
+  --master-addr `dig +short redis-cluster-0.redis-cluster.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-cluster-3.redis-cluster.default.svc.cluster.local`:6379
+
+redis-trib.py replicate \
+  --master-addr `dig +short redis-cluster-1.redis-cluster.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-cluster-4.redis-cluster.default.svc.cluster.local`:6379
+
+redis-trib.py replicate \
+  --master-addr `dig +short redis-cluster-2.redis-cluster.default.svc.cluster.local`:6379 \
+  --slave-addr `dig +short redis-cluster-5.redis-cluster.default.svc.cluster.local`:6379
+
+4.check
+redis-cli -h `dig +short redis-cluster-0.redis-cluster.default.svc.cluster.local`
+>cluster nodes
