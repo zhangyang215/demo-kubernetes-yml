@@ -83,7 +83,7 @@ $ yum install docker-ce-17.12.0.ce
 ```
 
 ## 使用kubeadm部署Kubernetes
-###1.添加阿里的源(所有节点都执行)
+### 1.添加阿里的源(所有节点都执行)
 官网是：
 
 ```bash
@@ -128,7 +128,7 @@ chmod -R 777 ./xxx.sh
 ./xxx.sh
 ```
 
-###2.使用kubeadm init初始化集群（仅master上执行）
+### 2.使用kubeadm init初始化集群（仅master上执行）
 启动k8s主节点
 
 ```bash
@@ -163,7 +163,7 @@ chown $(id -u):$(id -g) ~/.kube/config
 export KUBECONFIG=/etc/kubernetes/admin.conf
 echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> ~/.bash_profile
 ```
-###3.安装 Flannel 网络（仅master上执行）
+### 3.安装 Flannel 网络（仅master上执行）
 
 ```bash
 mkdir -p /etc/cni/net.d/
@@ -214,7 +214,7 @@ kube-scheduler-172-19-1-109            1/1       Running   0          1h
 ```
 如果所有节点都处于Running状态，主节点安装成功
 
-##加入worker节点(所有从节点执行)
+## 加入worker节点(所有从节点执行)
 依次在每个从节点上执行join操作：
 
 ```bash
@@ -238,7 +238,7 @@ k8s-node-2    Ready    <none>   10d   v1.11.7
 ```
 如果都是Ready状态，表明k8s集群安装成功！如果有NotReady状态，检查集群安装过程，最大可能是Flannel虚拟网络未正确安装。
 
-##安装Dashboard
+## 安装Dashboard
 执行命令：
 
 ```bash
